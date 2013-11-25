@@ -519,13 +519,17 @@
       nnoremap [ctrlp]b :CtrlPBuffer<cr>
     "}}}
     NeoBundleLazy 'scrooloose/nerdtree', {'autoload':{'commands':['NERDTreeToggle','NERDTreeFind']}} "{{{
+      let NERDTreeMouseMode=2
+      let NERDTreeKeepTreeInNewTab=1
+      let g:nerdtree_tabs_open_on_gui_startup=0
       let NERDTreeShowHidden=1
-      let NERDTreeQuitOnOpen=0
+      let NERDTreeQuitOnOpen=1
       let NERDTreeShowLineNumbers=1
       let NERDTreeChDirMode=0
       let NERDTreeShowBookmarks=1
-      let NERDTreeIgnore=['\.git','\.hg']
+      let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
       let NERDTreeBookmarksFile='~/.vim/.cache/NERDTreeBookmarks'
+      nnoremap <C-e> :NERDTreeToggle<CR>
       nnoremap <F2> :NERDTreeToggle<CR>
       nnoremap <F3> :NERDTreeFind<CR>
     "}}}
@@ -829,6 +833,12 @@
   autocmd FileType python setlocal foldmethod=indent
   autocmd FileType markdown setlocal nolist
   autocmd FileType vim setlocal fdm=indent keywordprg=:help
+
+  " Remove trailing whitespaces and ^M chars
+  " To disable the stripping of whitespace, add the following to your
+  " .vimrc file:
+  "   let g:dotvim_settings.keep_trailing_whitespace = 1
+  autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> if !exists('s:settings.keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
 "}}}
 
 " color schemes {{{
@@ -840,9 +850,8 @@
   NeoBundle 'tomasr/molokai'
   NeoBundle 'chriskempson/vim-tomorrow-theme'
   NeoBundle 'chriskempson/base16-vim'
-  NeoBundle 'w0ng/vim-hybrid'
+  NeoBundle 'dolio/vim-hybrid'
   NeoBundle 'sjl/badwolf'
-  NeoBundle 'jelera/vim-gummybears-colorscheme'
   NeoBundle 'zeis/vim-kolor' "{{{
     let g:kolor_underlined=1
   "}}}
